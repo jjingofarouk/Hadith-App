@@ -9,32 +9,38 @@
 </head>
 <body>
     <div class="container">
-        <h1>Hadith Finder</h1>
+        <h1>📖 Hadith Finder</h1>
 
-        <!-- Search Bar -->
-        <input type="text" id="search-box" placeholder="Search for a hadith..." />
-
-        <!-- Hadith Collection Selector -->
-        <select id="hadith-collection">
-            <option value="bukhari">Bukhari</option>
-            <option value="muslim">Muslim</option>
-            <option value="abudawud">Abu Dawood</option>
+        <!-- Search Box -->
+        <input type="text" id="search-box" placeholder="Search Hadith...">
+        
+        <!-- Dropdown for Book Selection -->
+        <select id="hadith-book">
+            <option value="">All Books</option>
+            <option value="sahih-bukhari">Sahih Bukhari</option>
+            <option value="sahih-muslim">Sahih Muslim</option>
+            <option value="abu-dawood">Abu Dawood</option>
+            <option value="ibn-e-majah">Ibn Majah</option>
         </select>
 
-        <button id="fetch-hadith">Get Hadith</button>
+        <!-- Fetch Button -->
+        <button id="fetch-hadith">🔍 Get Hadith</button>
 
+        <!-- Hadith Display Area -->
         <div id="hadith-container">
-            <p id="hadith-text">Click the button to fetch a random Hadith.</p>
+            <p id="hadith-text">Click the button to fetch a Hadith.</p>
             <p id="hadith-source"></p>
         </div>
 
-        <button id="favorite-btn">⭐ Save to Favorites</button>
+        <!-- Save Favorite Hadith -->
+        <button id="save-favorite">⭐ Save to Favorites</button>
 
+        <!-- Favorites List -->
         <h2>Saved Hadiths</h2>
         <ul id="favorites-list"></ul>
 
         <!-- Dark Mode Toggle -->
-        <button id="dark-mode-toggle">🌙 Dark Mode</button>
+        <button id="toggle-dark-mode">🌙 Dark Mode</button>
     </div>
 </body>
 </html>
