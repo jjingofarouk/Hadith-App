@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Hadith App</title>
+    <title>Hadith Finder</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Random Hadith Generator</h1>
+        <h1>Hadith Finder</h1>
+
+        <!-- Search Bar -->
+        <input type="text" id="search-box" placeholder="Search for a hadith..." />
+
+        <!-- Hadith Collection Selector -->
+        <select id="hadith-collection">
+            <option value="bukhari">Bukhari</option>
+            <option value="muslim">Muslim</option>
+            <option value="abudawud">Abu Dawood</option>
+        </select>
+
+        <button id="fetch-hadith">Get Hadith</button>
+
         <div id="hadith-container">
             <p id="hadith-text">Click the button to fetch a random Hadith.</p>
             <p id="hadith-source"></p>
         </div>
-        <button id="fetch-hadith">Get Random Hadith</button>
+
+        <button id="favorite-btn">⭐ Save to Favorites</button>
+
+        <h2>Saved Hadiths</h2>
+        <ul id="favorites-list"></ul>
+
+        <!-- Dark Mode Toggle -->
+        <button id="dark-mode-toggle">🌙 Dark Mode</button>
     </div>
 </body>
 </html>
