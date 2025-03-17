@@ -2,53 +2,50 @@ document.addEventListener("DOMContentLoaded", function () {
     const fetchHadithButton = document.getElementById("fetch-hadith");
     const hadithText = document.getElementById("hadith-text");
     const hadithSource = document.getElementById("hadith-source");
-    const hadithCollection = document.getElementById("hadith-collection");
+    const hadithBook = document.getElementById("hadith-book");
     const searchBox = document.getElementById("search-box");
-    const favoriteButton = document.getElementById("favorite-btn");
+    const saveFavoriteButton = document.getElementById("save-favorite");
     const favoritesList = document.getElementById("favorites-list");
-    const darkModeToggle = document.getElementById("dark-mode-toggle");
+    const toggleDarkModeButton = document.getElementById("toggle-dark-mode");
+
+    const apiKey = "$2y$10$s62j5VKKoJcPSiE9GqAwSeVe8lOxIPq0FIdkhtWnTveKo49RqY5u"; // Replace with your actual API key
+    const baseUrl = "https://hadithapi.com/api/hadiths";
 
     fetchHadithButton.addEventListener("click", async () => {
         try {
-            const response = await fetchHadith(hadithCollection.value);
-            hadithText.textContent = response.hadith;
-            hadithSource.textContent = `Source: ${response.source}`;
+            const book = hadithBook.value;
+            const searchQuery = searchBox.value.trim();
+
+            let url = `${baseUrl}?apiKey=${apiKey}`;
+            if (book) url += `&book=${book}`;
+            if (searchQuery) url += `&hadithEnglish=${encodeURIComponent(searchQuery)}`;
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.hadiths && data.hadiths.length > 0) {
+                const hadith = data.hadiths[Math.floor(Math.random() * data.hadiths.length)];
+                hadithText.textContent = hadith.hadithEnglish;
+                hadithSource.textContent = `📚 ${hadith.book.name}, Hadith No: ${hadith.hadithNumber}`;
+            } else {
+                hadithText.textContent = "No Hadith found.";
+                hadithSource.textContent = "";
+            }
         } catch (error) {
-            hadithText.textContent = "Error fetching hadith. Please try again.";
+            console.error("Error fetching hadith:", error);
+            hadithText.textContent = "Error fetching Hadith. Please try again.";
         }
     });
 
-    favoriteButton.addEventListener("click", () => {
-        if (hadithText.textContent !== "Click the button to fetch a random Hadith.") {
+    saveFavoriteButton.addEventListener("click", () => {
+        if (hadithText.textContent !== "Click the button to fetch a Hadith.") {
             const listItem = document.createElement("li");
             listItem.textContent = hadithText.textContent;
             favoritesList.appendChild(listItem);
         }
     });
 
-    darkModeToggle.addEventListener("click", () => {
+    toggleDarkModeButton.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
     });
-
-    async function fetchHadith(collection) {
-        const axiosOptions = {
-            method: "GET",
-            url: `https://hadith2.p.rapidapi.com/${collection}/3/17`, // Example API
-            headers: {
-                "x-rapidapi-key": "YOUR_RAPIDAPI_KEY", // Replace with your actual API key
-                "x-rapidapi-host": "hadith2.p.rapidapi.com",
-            },
-        };
-
-        try {
-            const response = await axios.request(axiosOptions);
-            return {
-                hadith: response.data.hadith,
-                source: `${collection.toUpperCase()} ${response.data.chapter}:${response.data.number}`,
-            };
-        } catch (error) {
-            console.error("API error:", error);
-            throw error;
-        }
-    }
 });
